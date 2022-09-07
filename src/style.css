@@ -1,0 +1,31 @@
+.ant-menu-horizontal {
+  border-bottom: 1px solid #001529;
+}
+
+.ant-menu-horizontal > .ant-menu-item-selected a {
+  color: rgba(255, 255, 255, 0.65);
+  background: #001529;
+}
+
+.ant-menu-horizontal > .ant-menu-item a:hover {
+  color: #ffffff !important;
+
+}
+
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+  background-color: #1890ff;
+}
+
+.ant-menu-horizontal > .ant-menu-item a {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.ant-modal-content {
+  overflow: auto;
+  border-radius: 1rem;
+}
+
+.ant-table-wrapper, .ant-form-vertical .ant-form-item .ant-form-item-control {
+  border: 2px solid rgba(0, 0, 0, 0.06);
+  border-radius: 0.3rem;
+}
