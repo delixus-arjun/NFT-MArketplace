@@ -17,24 +17,13 @@ export const networkCollections = {
   "0x4":[
     {
       image:
-        "https://lh3.googleusercontent.com/BWCni9INm--eqCK800BbRkL10zGyflxfPwTHt4XphMSWG3XZvPx1JyGdfU9vSor8K046DJg-Q8Y4ioUlWHiCZqgR_L00w4vcbA-w=s0",
+        "https://gateway.pinata.cloud/ipfs/QmUYmSukDEp1CFGCBXfGNJfbAdu2m6s89Uns2jtrbgz7Gq",
       name: "Test Mages",
       addrs: "0x4487f4B08b74d3A17CFDb3a8775AD4135bd884ec",
-    }
-    ,{
+    },
+    {
       image:
-        "https://lh3.googleusercontent.com/BWCni9INm--eqCK800BbRkL10zGyflxfPwTHt4XphMSWG3XZvPx1JyGdfU9vSor8K046DJg-Q8Y4ioUlWHiCZqgR_L00w4vcbA-w=s0",
-      name: "Reco",
-      addrs: "0x112Ef37f3f0d245F5D7f60D6fFD4c039dE3E7E0f",
-    }
-    ,{
-      image:
-        "https://lh3.googleusercontent.com/BWCni9INm--eqCK800BbRkL10zGyflxfPwTHt4XphMSWG3XZvPx1JyGdfU9vSor8K046DJg-Q8Y4ioUlWHiCZqgR_L00w4vcbA-w=s0",
-      name: "hero",
-      addrs: "0x975765680953C77D2b4b88075819f50ff81306d4",
-    },{
-      image:
-        "https://lh3.googleusercontent.com/BWCni9INm--eqCK800BbRkL10zGyflxfPwTHt4XphMSWG3XZvPx1JyGdfU9vSor8K046DJg-Q8Y4ioUlWHiCZqgR_L00w4vcbA-w=s0",
+        "https://gateway.pinata.cloud/ipfs/QmUYmSukDEp1CFGCBXfGNJfbAdu2m6s89Uns2jtrbgz7Gq",
       name: "YT Minter",
       addrs: "0x1EA3F7Da099Ae017a370732d9D81A9ea31A158Db",
     }
