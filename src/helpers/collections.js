@@ -24,8 +24,14 @@ export const networkCollections = {
     {
       image:
         "https://gateway.pinata.cloud/ipfs/QmUYmSukDEp1CFGCBXfGNJfbAdu2m6s89Uns2jtrbgz7Gq",
-      name: "YT Minter",
-      addrs: "0x1EA3F7Da099Ae017a370732d9D81A9ea31A158Db",
+      name: "Reco",
+      addrs: "0x112Ef37f3f0d245F5D7f60D6fFD4c039dE3E7E0f",
+    },
+    {
+      image:
+        "https://gateway.pinata.cloud/ipfs/QmUYmSukDEp1CFGCBXfGNJfbAdu2m6s89Uns2jtrbgz7Gq",
+      name: "hero",
+      addrs: "0x975765680953C77D2b4b88075819f50ff81306d4",
     }
     
   ],

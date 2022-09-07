@@ -55,15 +55,15 @@ const onSubmit  = async (e)=>{
       console.log("metaDtaUrl :- ", metadataUrl)
       // interact with Contract
 
-      const contract = new web3.eth.Contract(CollectionABI,CollectionAddress);
-      const response = await contract.methods
-      .mint(metadataUrl)
-      .send({from:user.get("ethAddress")});
+      // const contract = new web3.eth.Contract(CollectionABI,CollectionAddress);
+      // const response = await contract.methods
+      // .mint(metadataUrl)
+      // .send({from:user.get("ethAddress")});
 
-      const tokenId = response.events.Transfer.returnValues.tokenId;
+      // const tokenId = response.events.Transfer.returnValues.tokenId;
 
-      alert(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`);
-      console.log(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`)
+      // alert(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`);
+      // console.log(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`)
 
     } catch (error) {
       console.log("something  went Worng")
@@ -82,9 +82,12 @@ const onCrateCollection  = async (e)=>{
 
       const contract = new web3.eth.Contract(CollectionFactoryABI,collectionAddr);
       console.log(contract)
-    //   const response = await contract.methods
-    //   .mint(metadataUrl)
-    //   .send({from:user.get("ethAddress")});
+
+       const response = await contract.methods
+       .create(user.get("ethAddress"),CollectionName,CollectionSymbol)
+       .send({from:user.get("ethAddress")});
+
+       console.log("resopse:- ", response)
 
     //   const tokenId = response.events.Transfer.returnValues.tokenId;
 
