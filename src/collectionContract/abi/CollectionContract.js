@@ -1,4 +1,4 @@
-export const collectionAddr = "0x4cab5304d8d11725269efcdfc7ff39428ba71ad1"
+export const collectionAddr = "0x8048e3E9F17C1dbC824a1B4E623200e764227412"
 export const CollectionFactoryABI = [
 	{
 		"inputs": [
@@ -51,6 +51,34 @@ export const CollectionFactoryABI = [
 			}
 		],
 		"name": "getCar",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "collectionName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "collSymbol",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "collectionAddr",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getlastObject",
 		"outputs": [
 			{
 				"internalType": "address",

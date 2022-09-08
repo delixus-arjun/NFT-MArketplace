@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useMoralis } from "react-moralis";
+import { Select } from 'antd';
+import { useMoralis , useMoralisQuery} from "react-moralis";
 import { Card, Image,  Modal, Input, Alert, Upload, Button  ,H3, label, Form, textarea} from "antd";
 import { useNFTBalance } from "hooks/useNFTBalance";
 import { CompassOutlined, FileSearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -10,6 +11,7 @@ import Icon from '@ant-design/icons';
 import Web3 from "web3"
 import Moralis  from "moralis";
 import { contractAddress , contractabi } from "../contractMint";
+import moment from 'moment';
 
 import { collectionAddr, CollectionFactoryABI , CollectionABI } from "../collectionContract/abi/CollectionContract";
 
@@ -19,6 +21,7 @@ const { Meta } = Card;
 
 
 function Create() {
+const { Option } = Select;
 const {user } = useMoralis();
 const [name,setname] = useState('')
 const [CollectionName,setCollectionName] = useState('')
@@ -27,12 +30,21 @@ const [CollectionSymbol,setCollectionSymbol] = useState('')
 const [CollectionAddress,setCollectionAddress] = useState('')
 const [description,setdescription] = useState('')
 const [file,setfile] = useState()
- 
+const queryCollectionItem = useMoralisQuery("Collections");
+const fetchCollection = JSON.parse(
+  JSON.stringify(queryCollectionItem.data, [
+    "ownerAddress",
+    "CollectionName",
+    "CollectionAddress",
+    "symbol",
+  ])
+);
+
   const { TextArea } = Input;
 
 const onSubmit  = async (e)=>{
   
-    console.log("name:- ",name,"    desc:- ",description,  "file:- ", file)
+    console.log("name:- ",name,"    desc:- ",description,  "CollectionAddress:- ", CollectionAddress)
 
     try {
         // save image to IPFS
@@ -53,17 +65,17 @@ const onSubmit  = async (e)=>{
       await file2.saveIPFS();
       const metadataUrl = file2.ipfs(); 
       console.log("metaDtaUrl :- ", metadataUrl)
-      // interact with Contract
+    
 
-      // const contract = new web3.eth.Contract(CollectionABI,CollectionAddress);
-      // const response = await contract.methods
-      // .mint(metadataUrl)
-      // .send({from:user.get("ethAddress")});
+      const contract = new web3.eth.Contract(CollectionABI,CollectionAddress);
+      const response = await contract.methods
+      .mint(metadataUrl)
+      .send({from:user.get("ethAddress")});
 
-      // const tokenId = response.events.Transfer.returnValues.tokenId;
+      const tokenId = response.events.Transfer.returnValues.tokenId;
 
-      // alert(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`);
-      // console.log(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`)
+      alert(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`);
+      console.log(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`)
 
     } catch (error) {
       console.log("something  went Worng")
@@ -76,18 +88,50 @@ const onSubmit  = async (e)=>{
 const onCrateCollection  = async (e)=>{
   
     console.log("Collectionname:- ",CollectionName,"    CollectionSymbol:- ",CollectionSymbol)
-
+    console.log("hello1")
    
       // interact with Contract
 
-      const contract = new web3.eth.Contract(CollectionFactoryABI,collectionAddr);
-      console.log(contract)
+       console.log(fetchCollection)
 
-       const response = await contract.methods
-       .create(user.get("ethAddress"),CollectionName,CollectionSymbol)
-       .send({from:user.get("ethAddress")});
+      try {
+        const contract = new web3.eth.Contract(CollectionFactoryABI,collectionAddr);
+        console.log(collectionAddr)
+  
+  
+         const response = await contract.methods
+         .create(user.get("ethAddress"),CollectionName,CollectionSymbol)
+         .send({from:user.get("ethAddress")});
+  
+         console.log("resopse:- ", response)
 
-       console.log("resopse:- ", response)
+         var dateAndTime= moment().format("DD/MM/YYYY HH:mm:ss")
+
+         const getAddress = await contract.methods
+         .getlastObject().call();
+  
+         const Collections = Moralis.Object.extend("Collections");
+         const Object = new Collections();
+               Object.set("ownerAddress", getAddress.owner);
+               Object.set("CollectionName", getAddress.collectionName);
+               Object.set("CollectionAddress", getAddress.collectionAddr);
+               Object.set("symbol", getAddress.collSymbol);
+               Object.set("time",dateAndTime)
+               Object.save();
+          
+               
+      alert(`Collection sucessfully Created - ${contractAddress}`);
+
+      } catch (error) {
+        
+        console.log("resopse:- error")
+      }
+     
+
+
+
+      
+             
 
     //   const tokenId = response.events.Transfer.returnValues.tokenId;
 
@@ -95,7 +139,13 @@ const onCrateCollection  = async (e)=>{
     //   console.log(`NFT sucessfully minted Contract address - ${contractAddress} and TokenId - ${tokenId}`)
 
    
+
 } 
+
+function onChange(value) {
+  setCollectionAddress(value);
+}
+
   return (
     <>
      <div>
@@ -116,7 +166,7 @@ const onCrateCollection  = async (e)=>{
                             <TextArea rows={5} type="text" id="CollectionSymbol" placeholder="Collection Symbol" value={description} onChange={e=> setCollectionSymbol(e.target.value)}/>
                         </Form.Item>
                                 
-
+                         
 
                         <br></br>
                         
@@ -146,7 +196,23 @@ const onCrateCollection  = async (e)=>{
                 
  
                  <Form.Item name="CollectionAddress" label="CollectionAddress" rules={[{ required: true }]}>
-                 <Input  type="text" placeholder="CollectionAddress" value={CollectionAddress} onChange={e=> setCollectionAddress(e.target.value)} />
+                
+                 
+                  <Select
+                  showSearch
+                  style={{width: "600px",
+                          marginLeft: "20px" }}
+                  placeholder="Find a Collection"
+                  optionFilterProp="children"
+                  onChange={onChange}
+                  
+              >   
+              {fetchCollection && 
+                  fetchCollection.map((collection, i) => 
+                  <Option value={collection.CollectionAddress} key= {i}>{collection.CollectionName}</Option>
+                  )
+                  }   
+              </Select>
                  </Form.Item>
              
                  <Form.Item name="file" >
