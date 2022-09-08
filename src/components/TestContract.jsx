@@ -200,8 +200,7 @@ function onChange(value) {
                  
                   <Select
                   showSearch
-                  style={{width: "600px",
-                          marginLeft: "20px" }}
+                  style={{width: "600px"}}
                   placeholder="Find a Collection"
                   optionFilterProp="children"
                   onChange={onChange}
